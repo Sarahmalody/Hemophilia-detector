@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+# Get the DNA sequence from the user
+print "Enter a DNA sequence: ";
+my $sequence = <STDIN>;
+chomp $sequence;
+
+# Check if the sequence is normal or mutated
+if ($sequence =~ /T$/) {
+  print "Presence of hemophilia-causing mutation detected.\n";
+} else {
+  print "Normal genome detected.\n";
+
+  # Ask the user if they want to mutate the sequence
+  print "Do you want to mutate the sequence? (yes or no) ";
+  my $mutate_choice = <STDIN>;
+  chomp $mutate_choice;
+
+  if ($mutate_choice eq "yes") {
+    # Ask the user where to mutate and what nucleotide to change to
+    print "Enter the position where you want to mutate (1-" . length($sequence) . "): ";
+    my $mutate_pos = <STDIN>;
+    chomp $mutate_pos;
+
+    print "Enter the nucleotide to change to (A, C, G, or T): ";
+    my $mutate_nuc = <STDIN>;
+    chomp $mutate_nuc;
+
+    # Mutate the sequence as requested
+    my $mutated_sequence = $sequence;
+    substr($mutated_sequence, $mutate_pos-1, 1) = uc($mutate_nuc);
+
+    # Check for the presence of the mutation in the mutated sequence
+    if ($mutated_sequence =~ /T$/) {
+      print "Presence of hemophilia-causing mutation detected.\n";
+    } else {
+      print "Sequence mutated, but no hemophilia-causing mutation detected.\n";
+    }
+  } else {
+    print "Sequence is normal and not mutated.\n";
+  }
+}
